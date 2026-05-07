@@ -1,0 +1,57 @@
+# Node
+node_modules/
+.pnpm-store/
+dist/
+build/
+.next/
+*.tsbuildinfo
+.npm
+.eslintcache
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.coverage
+htmlcov/
+
+# Env
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Editor
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Logs
+*.log
+
+# Data
+data/
+*.db
+*.sqlite
+
+# Generated
+.turbo/
+coverage/
+
+# Local Claude config
+.claude/settings.local.json
+
+# Temporal
+temporal-data/
+
+# Build artifacts
+*.whl
+.eggs/
