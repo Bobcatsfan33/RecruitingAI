@@ -16,7 +16,7 @@ Tracking what's complete, what's interface-only-pending-credentials, and what's 
 | 9 — Outcome Loops + Predictive Models | DONE | sklearn LogisticRegression for placement_success + offer_acceptance, trained on synthetic 1500/1200-row datasets at startup, AUC > 0.7 on held-out. predict_proba + per-feature explanation. 30/60/90 retention surveys + satisfaction averaging. Models hot-reload from disk; /v1/outcomes/retrain regenerates from fresh synth or real data. 9 unit tests pass. |
 | 10 — Bench Management + Compliance | DONE | Contract end-date alerts (T-90/60/30) + clearance expiration alerts (T-180/90/30), local co-employment risk + conversion fee + utilisation calculators, compliance adapter interfaces (Background-check / DISS / E-Verify) all currently mock — none has a free public API. 16 unit tests pass. |
 | 11 — Market Intelligence + Data Products | DONE | Comp benchmark builder (p25/50/75/90 per role × seniority × location × clearance, w2-verified filter, min sample 3), hiring velocity report (30d/90d windows + momentum), competitive agency intelligence (pressure score 0-100 from outreach overlap + agency postings + LI activity), API-key-gated data API w/ free / pro / enterprise tier rate limits. 8 unit tests pass. |
-| 12 — Candidate Portal + Network Effects | _pending_ | |
+| 12 — Candidate Portal + Network Effects | DONE | Next.js candidate portal w/ Salesforce-meets-macOS aesthetic. Routes: /, /profile (self-service), /market (comp percentiles + skill momentum), /alerts (personalised matches), /refer (post-placement referral). Vibrancy top nav, Card + Stat primitives, light/dark token sets. Wires to /v1/candidates + /v1/market endpoints. |
 
 ## Integration adapter status
 
