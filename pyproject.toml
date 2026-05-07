@@ -41,7 +41,7 @@ ignore = ["S101", "B008", "S311", "UP042", "PLR0913", "PLR2004", "PLR0915"]
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["services", "packages"]
-addopts = "-q --color=yes"
+addopts = "-q --color=yes --import-mode=importlib"
 filterwarnings = [
     "ignore::DeprecationWarning",
 ]

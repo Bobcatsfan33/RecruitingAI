@@ -5,7 +5,7 @@ Tracking what's complete, what's interface-only-pending-credentials, and what's 
 | Sprint | State | Notes |
 |--------|-------|-------|
 | 0 — Monorepo foundation | DONE | docker-compose, workspaces, Makefile, env template |
-| 1 — Data Foundation | _in progress_ | |
+| 1 — Data Foundation | DONE | PG schema, ClickHouse schemas, resume parser, embeddings, ownership, semantic search, deployability scoring; 27 unit tests pass |
 | 2 — Domain Rules Engine | _pending_ | |
 | 3 — Screening Agent | _pending_ | |
 | 4 — Outreach + Close Protection | _pending_ | |
