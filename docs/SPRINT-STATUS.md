@@ -7,7 +7,7 @@ Tracking what's complete, what's interface-only-pending-credentials, and what's 
 | 0 — Monorepo foundation | DONE | docker-compose, workspaces, Makefile, env template |
 | 1 — Data Foundation | DONE | PG schema, ClickHouse schemas, resume parser, embeddings, ownership, semantic search, deployability scoring; 27 unit tests pass |
 | 2 — Domain Rules Engine | DONE | 11 OPA policies (comp/timeline/ownership/margin/conversion-fee/co-employment/non-compete/req-mode/LCAT/approachability/counteroffer/fiscal-year), FastAPI rules service with batch endpoint, registry sanity tests; 6 unit tests pass |
-| 3 — Screening Agent | _pending_ | |
+| 3 — Screening Agent | DONE | Predicate evaluator, escalation triggers, full ScreeningAgent (ownership pre-check + deterministic + LLM judgment + pass-rate decision + audit), batch endpoint, calibration harness w/ employer-rubric model. 23 unit tests pass. |
 | 4 — Outreach + Close Protection | _pending_ | |
 | 5 — Pipeline Orchestration | _pending_ | |
 | 6 — Talent Command Center + Client Advisory | _pending_ | |
