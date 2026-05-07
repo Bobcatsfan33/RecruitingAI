@@ -1,0 +1,26 @@
+[project]
+name = "wfi-capture-service"
+version = "0.1.0"
+description = "Pre-award capture intelligence — feasibility, heat maps, LCAT comp, LOI workflow."
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "structlog>=24.4",
+    "pydantic-settings>=2.4",
+    "wfi-schemas",
+    "wfi-rules-sdk",
+    "wfi-audit",
+]
+
+[tool.uv.sources]
+wfi-schemas = { workspace = true }
+wfi-rules-sdk = { workspace = true }
+wfi-audit = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["capture_svc"]
