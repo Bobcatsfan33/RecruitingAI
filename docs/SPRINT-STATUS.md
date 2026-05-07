@@ -8,7 +8,7 @@ Tracking what's complete, what's interface-only-pending-credentials, and what's 
 | 1 — Data Foundation | DONE | PG schema, ClickHouse schemas, resume parser, embeddings, ownership, semantic search, deployability scoring; 27 unit tests pass |
 | 2 — Domain Rules Engine | DONE | 11 OPA policies (comp/timeline/ownership/margin/conversion-fee/co-employment/non-compete/req-mode/LCAT/approachability/counteroffer/fiscal-year), FastAPI rules service with batch endpoint, registry sanity tests; 6 unit tests pass |
 | 3 — Screening Agent | DONE | Predicate evaluator, escalation triggers, full ScreeningAgent (ownership pre-check + deterministic + LLM judgment + pass-rate decision + audit), batch endpoint, calibration harness w/ employer-rubric model. 23 unit tests pass. |
-| 4 — Outreach + Close Protection | _pending_ | |
+| 4 — Outreach + Close Protection | DONE | Channel adapters (SMTP shipped, SendGrid shipped, Twilio adapter, MockChannel for LinkedIn), sequence engine (precision/velocity/close-protection presets), template renderer with counteroffer-inoculation toggle, response classifier (heuristic + LLM fallback), 2-prop z-test A/B framework, Close Protection agent w/ falloff detection. 30 unit tests pass. |
 | 5 — Pipeline Orchestration | _pending_ | |
 | 6 — Talent Command Center + Client Advisory | _pending_ | |
 | 7 — Interview Agent | _pending_ | |
