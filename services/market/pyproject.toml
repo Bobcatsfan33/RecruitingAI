@@ -1,0 +1,22 @@
+[project]
+name = "wfi-market-service"
+version = "0.1.0"
+description = "Market intelligence — comp benchmarks, talent heatmaps, hiring velocity, competitive agency intel."
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "structlog>=24.4",
+    "pydantic-settings>=2.4",
+    "wfi-schemas",
+]
+
+[tool.uv.sources]
+wfi-schemas = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["market_svc"]
