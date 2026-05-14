@@ -2,14 +2,13 @@
 
 from __future__ import annotations
 
-from datetime import date
+from datetime import UTC, date
 from uuid import uuid4
 
 from capture_svc.comp_estimator import estimate
 from capture_svc.feasibility import LcatRequirement, analyze
 from capture_svc.heatmap import CandidateFacet, build, summarise_by_clearance
 from capture_svc.loi import LoiStatus, draft_loi, expired, package
-
 
 # --- feasibility -----------------------------------------------------------
 
@@ -117,7 +116,7 @@ def test_loi_package_acceptance_rate():
 
 
 def test_loi_expiry_check():
-    from datetime import datetime, timedelta, timezone
+    from datetime import datetime, timedelta
     loi = draft_loi(
         candidate_id=uuid4(),
         opportunity_name="X",
@@ -127,4 +126,4 @@ def test_loi_expiry_check():
         period_of_performance_end=date.today(),
     )
     assert not expired(loi)
-    assert expired(loi, now=datetime.now(timezone.utc) + timedelta(days=400))
+    assert expired(loi, now=datetime.now(UTC) + timedelta(days=400))

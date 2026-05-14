@@ -11,7 +11,7 @@ from __future__ import annotations
 import asyncio
 import os
 from collections.abc import Iterable
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any, Protocol
 from uuid import UUID, uuid4
 
@@ -28,7 +28,7 @@ class AuditEvent(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     log_id: UUID = Field(default_factory=uuid4)
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(UTC))
     actor: str = "system"
     action: str
     resource_type: str
@@ -60,9 +60,10 @@ class ClickHouseAuditWriter:
         self._table = table
 
     @classmethod
-    def from_env(cls) -> "ClickHouseAuditWriter":
-        import clickhouse_connect  # noqa: PLC0415
-        from urllib.parse import urlparse  # noqa: PLC0415
+    def from_env(cls) -> ClickHouseAuditWriter:
+        from urllib.parse import urlparse
+
+        import clickhouse_connect
 
         parsed = urlparse(os.environ.get("CLICKHOUSE_URL", "http://localhost:8123"))
         client = clickhouse_connect.get_client(
@@ -78,7 +79,7 @@ class ClickHouseAuditWriter:
         await asyncio.to_thread(self._record_sync, event)
 
     def _record_sync(self, event: AuditEvent) -> None:
-        import json  # noqa: PLC0415
+        import json
 
         try:
             self._client.insert(
@@ -96,7 +97,7 @@ class ClickHouseAuditWriter:
                 ],
                 column_names=self._COLUMNS,
             )
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             log.error(
                 "govcon_audit_insert_failed",
                 error=str(exc),

@@ -7,8 +7,8 @@ against this synthetic corpus. Reproducible via seed.
 from __future__ import annotations
 
 import random
+from collections.abc import Iterator
 from datetime import date, timedelta
-from typing import Iterator
 
 from wfi_schemas import (
     AvailabilityWindow,
@@ -22,8 +22,8 @@ from wfi_schemas import (
     EngagementSignals,
     PolygraphType,
     PreferredChannel,
-    Requisition,
     ReqType,
+    Requisition,
     SalesMotion,
 )
 

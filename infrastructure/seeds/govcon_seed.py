@@ -11,7 +11,7 @@ from __future__ import annotations
 import asyncio
 import json
 import os
-from datetime import date, datetime, timedelta, timezone
+from datetime import UTC, date, datetime, timedelta
 from decimal import Decimal
 from typing import Any
 from uuid import UUID, uuid4
@@ -386,7 +386,7 @@ async def seed(dsn: str) -> None:
                 c["contract_vehicle"], c["agency_id"], c["vendor_id"], c["pop_start"],
                 c["pop_end"], c["current_value"], c["potential_value"], c["option_year"],
                 c["is_incumbent"], c["recompete_risk"], json.dumps({"seeded": True}),
-                datetime.now(timezone.utc),
+                datetime.now(UTC),
             )
         contract_ids = [c["id"] for c in contracts]
         for lc in _lcats(contract_ids):

@@ -10,13 +10,13 @@ import argparse
 import asyncio
 
 import structlog
-
 from candidates_svc import candidate_repo
 from candidates_svc.db import close_pool, init_pool
 from candidates_svc.deployability import deployability_score
 from candidates_svc.embeddings_text import candidate_embedding_text
-from infrastructure.seeds.synthetic import synthetic_candidates
 from wfi_data import NullEmbeddingProvider
+
+from infrastructure.seeds.synthetic import synthetic_candidates
 
 log = structlog.get_logger("seeds.run_all")
 

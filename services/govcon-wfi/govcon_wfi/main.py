@@ -40,7 +40,7 @@ async def lifespan(app: FastAPI):
         db = Database(settings.database_url)
         await db.connect()
         set_database_for_tests(db)
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         log.warning("database_unreachable_using_inmemory", error=str(exc))
         from govcon_wfi.db import InMemoryDatabase
 
@@ -51,7 +51,7 @@ async def lifespan(app: FastAPI):
     if settings.enable_real_ingestors:
         try:
             set_audit_for_tests(ClickHouseAuditWriter.from_env())
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             log.warning("audit_clickhouse_unreachable", error=str(exc))
             set_audit_for_tests(NullAuditWriter())
     else:

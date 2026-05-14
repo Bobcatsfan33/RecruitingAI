@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from enum import Enum
 from uuid import UUID, uuid4
 
@@ -26,7 +26,7 @@ class AuditLogEntry(BaseModel):
     model_config = ConfigDict(use_enum_values=True)
 
     log_id: UUID = Field(default_factory=uuid4)
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(UTC))
     action_type: ActionType
     candidate_id: UUID
     requisition_id: UUID | None = None

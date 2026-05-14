@@ -14,7 +14,7 @@ class RedisLike(Protocol):
 
 class RealRedis:
     def __init__(self, url: str):
-        import redis.asyncio as redis  # noqa: PLC0415
+        import redis.asyncio as redis
 
         self._client = redis.from_url(url, decode_responses=True)
 

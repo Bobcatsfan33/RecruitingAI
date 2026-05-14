@@ -8,7 +8,7 @@ Every event lands in both. Failures in either are caught and logged; the
 calling agent never crashes due to an event-publishing error.
 """
 
-from wfi_events.publisher import EventPublisher, NullEventPublisher
 from wfi_events.consumer import RedisStreamConsumer
+from wfi_events.publisher import EventPublisher, NullEventPublisher
 
 __all__ = ["EventPublisher", "NullEventPublisher", "RedisStreamConsumer"]

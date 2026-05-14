@@ -5,6 +5,7 @@ between every service. Importing from `wfi_schemas` should never trigger
 any I/O — pure types only.
 """
 
+from wfi_schemas.audit import ActionType, AuditLogEntry
 from wfi_schemas.candidate import (
     AvailabilityWindow,
     Candidate,
@@ -23,29 +24,12 @@ from wfi_schemas.candidate import (
     SalesMotion,
     SeOrientation,
 )
-from wfi_schemas.requisition import (
-    CompType,
-    EmployerRubric,
-    Requisition,
-    ReqConvictionTier,
-    ReqExclusivity,
-    ReqStatus,
-    ReqType,
-    ReqUrgency,
-)
 from wfi_schemas.events import (
     AgentType,
     Channel,
     EventType,
     InteractionEvent,
     Outcome,
-)
-from wfi_schemas.audit import ActionType, AuditLogEntry
-from wfi_schemas.scorecard import (
-    DimensionScore,
-    EscalationFlag,
-    Recommendation,
-    Scorecard,
 )
 from wfi_schemas.govcon import (
     AdjudicationStatus,
@@ -62,7 +46,6 @@ from wfi_schemas.govcon import (
     Certification,
     CertificationStatus,
     Clearance,
-    ClearanceLevel as GovConClearanceLevel,
     Contract,
     ContractCreate,
     ContractSource,
@@ -77,12 +60,33 @@ from wfi_schemas.govcon import (
     GapRiskLevel,
     Lcat,
     LcatRequirement,
-    PolyType as GovConPolyType,
     RecompeteEvent,
     RecompeteEventType,
     RecompeteRisk,
     SetAsideType,
     Vendor,
+)
+from wfi_schemas.govcon import (
+    ClearanceLevel as GovConClearanceLevel,
+)
+from wfi_schemas.govcon import (
+    PolyType as GovConPolyType,
+)
+from wfi_schemas.requisition import (
+    CompType,
+    EmployerRubric,
+    ReqConvictionTier,
+    ReqExclusivity,
+    ReqStatus,
+    ReqType,
+    Requisition,
+    ReqUrgency,
+)
+from wfi_schemas.scorecard import (
+    DimensionScore,
+    EscalationFlag,
+    Recommendation,
+    Scorecard,
 )
 
 __all__ = [
@@ -113,9 +117,9 @@ __all__ = [
     "Clearance",
     "ClearanceStatus",
     "ClearanceType",
-    "CompensationEntry",
     "CompTrajectory",
     "CompType",
+    "CompensationEntry",
     "Contract",
     "ContractCreate",
     "ContractSource",
@@ -141,10 +145,10 @@ __all__ = [
     "Outcome",
     "PolygraphType",
     "PreferredChannel",
+    "Recommendation",
     "RecompeteEvent",
     "RecompeteEventType",
     "RecompeteRisk",
-    "Recommendation",
     "ReqConvictionTier",
     "ReqExclusivity",
     "ReqStatus",

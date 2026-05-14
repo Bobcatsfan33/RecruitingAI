@@ -2,16 +2,16 @@
 
 from govcon_wfi.db.pool import (
     Database,
-    InMemoryDatabase,
     DatabaseProtocol,
+    InMemoryDatabase,
     get_database,
     set_database_for_tests,
 )
 
 __all__ = [
     "Database",
-    "InMemoryDatabase",
     "DatabaseProtocol",
+    "InMemoryDatabase",
     "get_database",
     "set_database_for_tests",
 ]

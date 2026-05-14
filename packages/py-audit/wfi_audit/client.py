@@ -14,7 +14,6 @@ from typing import Any
 import clickhouse_connect
 import structlog
 from clickhouse_connect.driver.client import Client
-
 from wfi_schemas import AuditLogEntry
 
 log = structlog.get_logger("wfi.audit")
@@ -98,7 +97,7 @@ class AuditLogger:
                 [_row_for(entry)],
                 column_names=_COLUMNS,
             )
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             # Audit logging must never crash the calling agent. Log and drop.
             log.error("audit_insert_failed", error=str(exc), action=entry.action_type)
 

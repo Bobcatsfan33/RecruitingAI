@@ -10,8 +10,9 @@ from __future__ import annotations
 import threading
 from collections.abc import AsyncIterator, Iterable
 from contextlib import asynccontextmanager
+from datetime import UTC
 from typing import Any, Protocol
-from uuid import UUID, uuid4
+from uuid import uuid4
 
 import structlog
 
@@ -55,7 +56,7 @@ class Database:
     async def connect(self) -> None:
         if self._pool is not None:
             return
-        import asyncpg  # noqa: PLC0415 — defer import to keep tests light
+        import asyncpg
 
         self._pool = await asyncpg.create_pool(self._dsn, min_size=1, max_size=10)
 
@@ -89,7 +90,7 @@ class Database:
     ) -> dict[str, Any]:
         cols = ", ".join(f'"{c}"' for c in columns)
         placeholders = ", ".join(f"${i + 1}" for i in range(len(values)))
-        sql = f'INSERT INTO "{table}" ({cols}) VALUES ({placeholders}) RETURNING *'  # noqa: S608
+        sql = f'INSERT INTO "{table}" ({cols}) VALUES ({placeholders}) RETURNING *'
         row = await self.fetchrow(sql, *values)
         if row is None:
             raise RuntimeError(f"insert into {table} returned no row")
@@ -107,7 +108,7 @@ class Database:
             return await self.get_row(table, pk_column, pk_value)
         set_clause = ", ".join(f'"{c}" = ${i + 1}' for i, c in enumerate(columns))
         pk_placeholder = f"${len(columns) + 1}"
-        sql = (  # noqa: S608
+        sql = (
             f'UPDATE "{table}" SET {set_clause}, "updated_at" = NOW() '
             f'WHERE "{pk_column}" = {pk_placeholder} RETURNING *'
         )
@@ -129,7 +130,7 @@ class Database:
             clauses.append(f'"{col}" = ${len(args)}')
         where = f" WHERE {' AND '.join(clauses)}" if clauses else ""
         order = f' ORDER BY "{order_by}" DESC' if order_by else ""
-        sql = (  # noqa: S608
+        sql = (
             f'SELECT * FROM "{table}"{where}{order} '
             f"LIMIT {int(limit)} OFFSET {int(offset)}"
         )
@@ -138,7 +139,7 @@ class Database:
     async def get_row(
         self, table: str, pk_column: str, pk_value: Any
     ) -> dict[str, Any] | None:
-        sql = f'SELECT * FROM "{table}" WHERE "{pk_column}" = $1'  # noqa: S608
+        sql = f'SELECT * FROM "{table}" WHERE "{pk_column}" = $1'
         return await self.fetchrow(sql, pk_value)
 
 
@@ -161,13 +162,13 @@ class InMemoryDatabase:
     def _table(self, name: str) -> dict[Any, dict[str, Any]]:
         return self._tables.setdefault(name, {})
 
-    async def fetch(self, sql: str, *args: Any) -> list[dict[str, Any]]:  # noqa: ARG002
+    async def fetch(self, sql: str, *args: Any) -> list[dict[str, Any]]:
         raise NotImplementedError("InMemoryDatabase does not execute raw SQL")
 
-    async def fetchrow(self, sql: str, *args: Any) -> dict[str, Any] | None:  # noqa: ARG002
+    async def fetchrow(self, sql: str, *args: Any) -> dict[str, Any] | None:
         raise NotImplementedError("InMemoryDatabase does not execute raw SQL")
 
-    async def execute(self, sql: str, *args: Any) -> str:  # noqa: ARG002
+    async def execute(self, sql: str, *args: Any) -> str:
         return "OK"
 
     async def insert_returning(
@@ -176,9 +177,9 @@ class InMemoryDatabase:
         with self._lock:
             row = dict(zip(columns, values, strict=True))
             row.setdefault("id", uuid4())
-            from datetime import datetime, timezone
+            from datetime import datetime
 
-            now = datetime.now(timezone.utc)
+            now = datetime.now(UTC)
             row.setdefault("created_at", now)
             if table in {"contracts", "employees", "alert_rules"}:
                 row.setdefault("updated_at", now)
@@ -202,9 +203,9 @@ class InMemoryDatabase:
                 return None
             for col, val in zip(columns, values, strict=True):
                 existing[col] = val
-            from datetime import datetime, timezone
+            from datetime import datetime
 
-            existing["updated_at"] = datetime.now(timezone.utc)
+            existing["updated_at"] = datetime.now(UTC)
             return dict(existing)
 
     async def list_rows(

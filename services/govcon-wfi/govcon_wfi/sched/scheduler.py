@@ -25,9 +25,9 @@ class IngestScheduler:
 
     def start(self) -> None:
         try:
-            from apscheduler.schedulers.asyncio import AsyncIOScheduler  # noqa: PLC0415
-            from apscheduler.triggers.cron import CronTrigger  # noqa: PLC0415
-        except Exception as exc:  # noqa: BLE001
+            from apscheduler.schedulers.asyncio import AsyncIOScheduler
+            from apscheduler.triggers.cron import CronTrigger
+        except Exception as exc:
             log.warning("apscheduler_unavailable", error=str(exc))
             return
 
@@ -49,19 +49,19 @@ class IngestScheduler:
             self._scheduler = None
 
     async def _run_sam(self) -> None:
-        from govcon_wfi.ingestors.sam_gov import build_sam_adapter, run_sam_sync  # noqa: PLC0415
+        from govcon_wfi.ingestors.sam_gov import build_sam_adapter, run_sam_sync
 
         adapter = build_sam_adapter(self._settings)
         await run_sam_sync(adapter, started=datetime.now())
 
     async def _run_fpds(self) -> None:
-        from govcon_wfi.ingestors.fpds import build_fpds_adapter, run_fpds_sync  # noqa: PLC0415
+        from govcon_wfi.ingestors.fpds import build_fpds_adapter, run_fpds_sync
 
         adapter = build_fpds_adapter(self._settings)
         await run_fpds_sync(adapter, started=datetime.now())
 
     async def _run_usaspending(self) -> None:
-        from govcon_wfi.ingestors.usaspending import (  # noqa: PLC0415
+        from govcon_wfi.ingestors.usaspending import (
             build_usaspending_adapter,
             run_usaspending_sync,
         )

@@ -51,7 +51,10 @@ def test_get_contract_returns_full_detail(client):
     created = client.post("/v1/contracts", json=_payload("PIID-003")).json()
     r = client.get(f"/v1/contracts/{created['id']}")
     assert r.status_code == 200
-    assert r.json()["piid"] == "PIID-003"
+    body = r.json()
+    assert body["contract"]["piid"] == "PIID-003"
+    assert body["lcats"] == []
+    assert body["recompete_events"] == []
 
 
 def test_get_unknown_returns_404(client):

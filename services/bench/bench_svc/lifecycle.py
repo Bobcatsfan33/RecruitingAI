@@ -3,10 +3,10 @@ redeployment status."""
 
 from __future__ import annotations
 
+from collections.abc import Iterable
 from dataclasses import dataclass
-from datetime import date, datetime, timezone
+from datetime import UTC, date, datetime
 from enum import Enum
-from typing import Iterable
 from uuid import UUID
 
 
@@ -47,7 +47,7 @@ class ContractorRecord:
 
 
 def _today() -> date:
-    return datetime.now(timezone.utc).date()
+    return datetime.now(UTC).date()
 
 
 def evaluate_contractor(

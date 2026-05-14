@@ -7,9 +7,8 @@ Pre-award capture — we identify candidates, secure contingent commitments
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import date, datetime, timedelta, timezone
+from datetime import UTC, date, datetime, timedelta
 from enum import Enum
-from typing import Any
 from uuid import UUID, uuid4
 
 
@@ -33,7 +32,7 @@ class Loi:
     contingent_offer_summary: str
     status: LoiStatus = LoiStatus.DRAFT
     expires_at: datetime = field(
-        default_factory=lambda: datetime.now(timezone.utc) + timedelta(days=90)
+        default_factory=lambda: datetime.now(UTC) + timedelta(days=90)
     )
     signed_at: datetime | None = None
     document_url: str | None = None
@@ -96,10 +95,10 @@ def package(
     return LoiPackage(
         opportunity_name=opportunity_name,
         contract_vehicle=contract_vehicle,
-        submitted_at=datetime.now(timezone.utc),
+        submitted_at=datetime.now(UTC),
         lois=lois,
     )
 
 
 def expired(loi: Loi, *, now: datetime | None = None) -> bool:
-    return (now or datetime.now(timezone.utc)) > loi.expires_at
+    return (now or datetime.now(UTC)) > loi.expires_at

@@ -8,7 +8,6 @@ from typing import Any, Literal
 import httpx
 from pydantic import BaseModel, Field
 
-
 Verdict = Literal[
     "feasible", "infeasible", "warning", "blocked", "allowed", "required",
     "expired", "valid", "approved", "rejected", "high_risk", "medium_risk",

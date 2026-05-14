@@ -6,7 +6,7 @@ results so the screening / pipeline / bench agents don't all reimplement
 the same response parsing.
 """
 
-from wfi_rules_sdk.client import RulesClient, RuleEvaluation
+from wfi_rules_sdk.client import RuleEvaluation, RulesClient
 from wfi_rules_sdk.mock import MockRulesClient
 
-__all__ = ["RulesClient", "RuleEvaluation", "MockRulesClient"]
+__all__ = ["MockRulesClient", "RuleEvaluation", "RulesClient"]

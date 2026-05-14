@@ -6,14 +6,13 @@ types — importing this module triggers no I/O.
 
 from __future__ import annotations
 
-from datetime import date, datetime, timezone
+from datetime import UTC, date, datetime
 from decimal import Decimal
 from enum import Enum
 from typing import Any
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, ConfigDict, Field
-
 
 # --- Enums ----------------------------------------------------------------
 
@@ -153,7 +152,7 @@ class Agency(BaseModel):
     name: str
     code: str
     department: str | None = None
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class Vendor(BaseModel):
@@ -166,7 +165,7 @@ class Vendor(BaseModel):
     cage_code: str | None = None
     size_standard: str | None = None
     set_aside_type: SetAsideType | None = None
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class Contract(BaseModel):
@@ -192,8 +191,8 @@ class Contract(BaseModel):
     source: ContractSource = ContractSource.MANUAL
     raw_json: dict[str, Any] | None = None
     last_synced_at: datetime | None = None
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class ContractCreate(BaseModel):
@@ -252,7 +251,7 @@ class Lcat(BaseModel):
     location: str | None = None
     headcount: int = 1
     bill_rate_ceiling: Decimal | None = None
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class LcatRequirement(BaseModel):
@@ -282,8 +281,8 @@ class Employee(BaseModel):
     monthly_cost: Decimal | None = None
     source_system: str | None = None
     external_id: str | None = None
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class EmployeeCreate(BaseModel):
@@ -335,7 +334,7 @@ class Assignment(BaseModel):
     end_date: date | None = None
     status: AssignmentStatus = AssignmentStatus.ACTIVE
     bill_rate: Decimal | None = None
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class Clearance(BaseModel):
@@ -348,7 +347,7 @@ class Clearance(BaseModel):
     investigation_date: date | None = None
     expiry_date: date | None = None
     adjudication_status: AdjudicationStatus = AdjudicationStatus.ACTIVE
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class Certification(BaseModel):
@@ -360,7 +359,7 @@ class Certification(BaseModel):
     issued_date: date | None = None
     expiry_date: date | None = None
     status: CertificationStatus = CertificationStatus.ACTIVE
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class RecompeteEvent(BaseModel):
@@ -373,7 +372,7 @@ class RecompeteEvent(BaseModel):
     sam_notice_id: str | None = None
     response_deadline: date | None = None
     details: dict[str, Any] | None = None
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class GapAnalysis(BaseModel):
@@ -388,7 +387,7 @@ class GapAnalysis(BaseModel):
     gap_count: int
     risk_level: GapRiskLevel
     estimated_fill_days: int | None = None
-    generated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    generated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class AlertRule(BaseModel):
@@ -403,7 +402,7 @@ class AlertRule(BaseModel):
     recipients: list[str] = Field(default_factory=list)
     is_enabled: bool = True
     cooldown_hours: int = 24
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class AlertHistory(BaseModel):
@@ -414,6 +413,6 @@ class AlertHistory(BaseModel):
     status: AlertStatus = AlertStatus.FIRING
     message: str
     context: dict[str, Any] = Field(default_factory=dict)
-    fired_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    fired_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
     acknowledged_at: datetime | None = None
     acknowledged_by: str | None = None

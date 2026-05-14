@@ -27,7 +27,7 @@ def test_registry_names_match_keys():
 
 
 def test_every_rego_has_a_registry_entry():
-    rego_files = [p for p in (RULES_ROOT / "wfi").rglob("*.rego")]
+    rego_files = list((RULES_ROOT / "wfi").rglob("*.rego"))
     registered_packages = {spec.package for spec in REGISTRY.values()}
     missing: list[str] = []
     for path in rego_files:

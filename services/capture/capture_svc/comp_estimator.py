@@ -14,7 +14,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-
 # Baseline annual salary bands by LCAT level (USD).
 _BASELINE = {
     "junior":  (95_000, 130_000),

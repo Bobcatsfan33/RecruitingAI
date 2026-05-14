@@ -5,7 +5,6 @@ from __future__ import annotations
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
 from govcon_wfi.db import InMemoryDatabase, set_database_for_tests
 from govcon_wfi.deps import NullAuditWriter, set_audit_for_tests
 from govcon_wfi.embeddings import NullEmbeddingProvider, set_embedder_for_tests

@@ -80,7 +80,7 @@ class RedisStreamConsumer:
                     try:
                         await handler(payload, msg_id_str)
                         await self._redis.xack(self._stream, self._group, msg_id_str)
-                    except Exception as exc:  # noqa: BLE001
+                    except Exception as exc:
                         log.error(
                             "handler_failed",
                             error=str(exc),

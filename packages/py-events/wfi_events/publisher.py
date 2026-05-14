@@ -13,7 +13,6 @@ import clickhouse_connect
 import redis.asyncio as redis
 import structlog
 from clickhouse_connect.driver.client import Client
-
 from wfi_schemas import InteractionEvent
 
 log = structlog.get_logger("wfi.events")
@@ -103,7 +102,7 @@ class EventPublisher:
                 [_row(event)],
                 column_names=_COLUMNS,
             )
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             log.error("ch_insert_failed", error=str(exc), event_type=event.event_type)
 
     async def _write_clickhouse_many(self, events: list[InteractionEvent]) -> None:
@@ -114,7 +113,7 @@ class EventPublisher:
                 [_row(e) for e in events],
                 column_names=_COLUMNS,
             )
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             log.error("ch_insert_failed_batch", error=str(exc), count=len(events))
 
     async def _write_redis(self, event: InteractionEvent) -> None:
@@ -126,7 +125,7 @@ class EventPublisher:
                 maxlen=100_000,
                 approximate=True,
             )
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             log.error("redis_xadd_failed", error=str(exc), agent=event.agent_type)
 
 

@@ -11,8 +11,8 @@ from __future__ import annotations
 
 import os
 from dataclasses import dataclass
-from datetime import datetime, timezone
-from typing import Any, Protocol
+from datetime import UTC, datetime
+from typing import Protocol
 
 
 @dataclass
@@ -81,7 +81,7 @@ class MockDissAdapter:
         return ClearanceVerificationResult(
             success=True, provider=self.name, candidate_id=candidate_id,
             clearance_type="active",
-            verified_at=datetime.now(timezone.utc),
+            verified_at=datetime.now(UTC),
             notes="DISS access requires federal employer enrollment.",
         )
 

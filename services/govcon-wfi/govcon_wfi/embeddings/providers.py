@@ -13,7 +13,6 @@ import os
 import struct
 from typing import Protocol
 
-
 EMBEDDING_DIM = 1536
 
 
@@ -58,7 +57,7 @@ class OpenAIEmbeddingProvider:
         self._model = model
 
     async def embed(self, text: str) -> list[float]:
-        import httpx  # noqa: PLC0415
+        import httpx
 
         async with httpx.AsyncClient(timeout=30.0) as client:
             resp = await client.post(

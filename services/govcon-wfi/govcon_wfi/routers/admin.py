@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 from fastapi import APIRouter
@@ -55,7 +55,7 @@ async def sync_status() -> SyncStatusResponse:
         sources=sources,
         totals=totals,
         health_score=round(health, 2),
-        generated_at=datetime.now(timezone.utc),
+        generated_at=datetime.now(UTC),
     )
 
 

@@ -6,7 +6,6 @@ from datetime import date, timedelta
 from uuid import uuid4
 
 import pytest
-
 from bench_svc.coemployment import CoEmploymentInputs, summarise
 from bench_svc.compliance_adapters import (
     MockBackgroundCheckAdapter,
@@ -21,7 +20,6 @@ from bench_svc.lifecycle import (
     evaluate_bench,
     evaluate_contractor,
 )
-
 
 # --- lifecycle ----------------------------------------------------------
 

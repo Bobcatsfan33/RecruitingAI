@@ -24,7 +24,17 @@ from uuid import UUID
 import structlog
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
-from wfi_schemas import Contract, ContractCreate, ContractUpdate
+from wfi_schemas import (
+    Agency,
+    Assignment,
+    Contract,
+    ContractCreate,
+    ContractUpdate,
+    GapAnalysis,
+    Lcat,
+    RecompeteEvent,
+    Vendor,
+)
 
 from govcon_wfi.db import get_database
 from govcon_wfi.deps import AuditEvent, get_audit
@@ -43,6 +53,16 @@ class ContractListResponse(BaseModel):
     total: int
     page: int
     page_size: int
+
+
+class ContractDetail(BaseModel):
+    contract: Contract
+    agency: Agency | None = None
+    vendor: Vendor | None = None
+    lcats: list[Lcat] = []
+    recompete_events: list[RecompeteEvent] = []
+    assignments: list[Assignment] = []
+    gap_analyses: list[GapAnalysis] = []
 
 
 def _to_contract(row: dict[str, Any]) -> Contract:
@@ -92,13 +112,55 @@ async def create_contract(body: ContractCreate) -> Contract:
     return contract
 
 
-@router.get("/{contract_id}", response_model=Contract)
-async def get_contract(contract_id: UUID) -> Contract:
+@router.get("/{contract_id}", response_model=ContractDetail)
+async def get_contract(contract_id: UUID) -> ContractDetail:
     db = get_database()
     row = await db.get_row("contracts", "id", contract_id)
     if row is None:
         raise HTTPException(404, "contract not found")
-    return _to_contract(row)
+    contract = _to_contract(row)
+
+    agency = None
+    if row.get("agency_id"):
+        ar = await db.get_row("agencies", "id", row["agency_id"])
+        agency = Agency.model_validate(ar) if ar else None
+
+    vendor = None
+    if row.get("vendor_id"):
+        vr = await db.get_row("vendors", "id", row["vendor_id"])
+        vendor = Vendor.model_validate(vr) if vr else None
+
+    lcats = [
+        Lcat.model_validate(r)
+        for r in await db.list_rows("lcats", filters={"contract_id": contract_id}, limit=200)
+    ]
+    recompete_events = [
+        RecompeteEvent.model_validate(r)
+        for r in await db.list_rows(
+            "recompete_events", filters={"contract_id": contract_id}, limit=200,
+        )
+    ]
+    assignments = [
+        Assignment.model_validate(r)
+        for r in await db.list_rows(
+            "assignments", filters={"contract_id": contract_id}, limit=200,
+        )
+    ]
+    gap_analyses = [
+        GapAnalysis.model_validate(r)
+        for r in await db.list_rows(
+            "gap_analyses", filters={"contract_id": contract_id}, limit=200,
+        )
+    ]
+    return ContractDetail(
+        contract=contract,
+        agency=agency,
+        vendor=vendor,
+        lcats=lcats,
+        recompete_events=recompete_events,
+        assignments=assignments,
+        gap_analyses=gap_analyses,
+    )
 
 
 @router.patch("/{contract_id}", response_model=Contract)
