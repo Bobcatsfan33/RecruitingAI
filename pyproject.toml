@@ -1,23 +1,17 @@
 [project]
-name = "workforce-intelligence-platform"
-version = "0.1.0"
-description = "AI-native workforce intelligence operating system."
+name = "govcon-workforce-intelligence"
+version = "1.0.0"
+description = "Contract intelligence + workforce gap analysis for GovCon services firms."
 requires-python = ">=3.12"
 license = { text = "MIT" }
 dependencies = []
 
 [tool.uv.workspace]
 members = [
+    "services/govcon-wfi",
     "services/rules",
-    "services/screening",
-    "services/outreach",
-    "services/pipeline",
-    "services/client-advisory",
-    "services/interview",
     "services/capture",
-    "services/outcomes",
     "services/bench",
-    "services/market",
     "packages/py-schemas",
     "packages/py-audit",
     "packages/py-events",
@@ -28,7 +22,7 @@ members = [
 [tool.ruff]
 line-length = 100
 target-version = "py312"
-extend-exclude = [".venv", "node_modules", "build", "dist"]
+extend-exclude = [".venv", "node_modules", "build", "dist", "_frozen"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "ASYNC", "S", "C4", "PIE", "RUF", "PL"]
@@ -40,7 +34,7 @@ ignore = ["S101", "B008", "S311", "UP042", "PLR0913", "PLR2004", "PLR0915"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
-testpaths = ["services", "packages"]
+testpaths = ["services/govcon-wfi", "services/rules", "services/capture", "services/bench", "packages"]
 addopts = "-q --color=yes --import-mode=importlib"
 filterwarnings = [
     "ignore::DeprecationWarning",
